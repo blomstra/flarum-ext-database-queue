@@ -26,6 +26,12 @@ Go into your hosting control panel and set up the following task to run every mi
 php flarum queue:work --stop-when-empty
 ```
 
+Or in cron language:
+
+```bash
+* * * * * cd /path/to/flarum && php flarum queue:work --stop-when-empty
+```
+
 ### FAQ
 
 *What is the difference with blomstra/flarum-redis?*
