@@ -19,6 +19,8 @@ class DatabaseQueue implements ExtenderInterface
                 'queue_jobs'
             );
 
+            $queue->setContainer($container);
+
             return $queue;
         });
 
