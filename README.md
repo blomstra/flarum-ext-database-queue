@@ -2,6 +2,8 @@
 
 This extension allows you to easily run a queue, using your database and by configuring one cron(job).
 
+> **Disclaimer**: this extension is provided "as is" by Blomstra. Only community support is provided.
+
 ## Background and when you need this
 
 By default, Flarum runs without a (background) queue. This means that all tasks of Flarum are processed during the request of the user.
