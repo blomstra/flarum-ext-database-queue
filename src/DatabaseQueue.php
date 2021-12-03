@@ -7,7 +7,7 @@ use Flarum\Extension\Extension;
 use Flarum\Foundation\Config;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Queue\DatabaseQueue as Queue;
-use Illuminate\Queue\Failed\DatabaseFailedJobProvider;
+use Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider;
 
 class DatabaseQueue implements ExtenderInterface
 {
@@ -28,7 +28,7 @@ class DatabaseQueue implements ExtenderInterface
             /** @var Config $config */
             $config = $container->make('flarum.config');
 
-            return new DatabaseFailedJobProvider(
+            return new DatabaseUuidFailedJobProvider(
                 $container->make('db'),
                 $config->offsetGet('database.database'),
                 'queue_failed_jobs'
