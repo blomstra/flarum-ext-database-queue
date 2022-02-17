@@ -2,16 +2,18 @@
     "name": "blomstra/database-queue",
     "description": "Adds Database queues to Flarum",
     "keywords": [
-        "flarum", "blomstra",
-        "queue", "database"
+        "flarum",
+        "blomstra",
+        "queue",
+        "database"
     ],
     "license": "MIT",
     "type": "flarum-extension",
     "authors": [
         {
-            "name": "Daniël Klabbers",
-            "email": "daniel@klabbers.email",
-            "homepage": "http://luceos.com"
+            "name": "Team Blomstra",
+            "email": "development@blomstra.net",
+            "role": "Developer"
         }
     ],
     "support": {
