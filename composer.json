@@ -19,7 +19,7 @@
     "support": {
         "issues": "https://github.com/blomstra/flarum-ext-database-queue/issues",
         "source": "https://github.com/blomstra/flarum-ext-database-queue",
-        "forum": "https://discuss.flarum.org/d/21873"
+        "forum": "https://discuss.flarum.org/d/28151"
     },
     "homepage": "https://blomstra.net",
     "require": {
