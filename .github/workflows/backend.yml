@@ -1,0 +1,11 @@
+name: Database Queue PHP
+
+on: [workflow_dispatch, push, pull_request]
+
+jobs:
+  run:
+    uses: flarum/framework/.github/workflows/REUSABLE_backend.yml@1.x
+    with:
+      enable_backend_testing: false
+
+      backend_directory: .
