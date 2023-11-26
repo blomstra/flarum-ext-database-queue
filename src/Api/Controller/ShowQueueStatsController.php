@@ -13,9 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ShowQueueStatsController implements RequestHandlerInterface
 {
     /**
-     * Undocumented variable
-     *
-     * @var \Illuminate\Queue\DatabaseQueue
+     * @var Queue
      */
     protected $queue;
 
@@ -37,7 +35,7 @@ class ShowQueueStatsController implements RequestHandlerInterface
         }
 
         return new JsonResponse([
-            'queue' => $this->queue->getConnectionName() ?? 'default',
+            'queue' => $this->queue->getConnectionName(),
             'status' => $this->isStarted() ? 'running' : 'inactive',
             'pendingJobs' => $this->queue->size(),
             'failedJobs' => count($this->failer->all()),
