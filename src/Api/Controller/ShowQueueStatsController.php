@@ -2,9 +2,12 @@
 
 namespace Blomstra\DatabaseQueue\Api\Controller;
 
+use Carbon\Carbon;
 use Flarum\Http\RequestUtil;
+use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Queue\DatabaseQueue;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,11 +24,17 @@ class ShowQueueStatsController implements RequestHandlerInterface
      * @var \Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider
      */
     protected $failer;
+
+    /**
+     * @var SettingsRepositoryInterface
+     */
+    protected $settings;
     
-    public function __construct(Queue $queue)
+    public function __construct(Queue $queue, SettingsRepositoryInterface $settings)
     {
         $this->queue = $queue;
         $this->failer = resolve('queue.failer');
+        $this->settings = $settings;
     }
     
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -34,16 +43,25 @@ class ShowQueueStatsController implements RequestHandlerInterface
             throw new ModelNotFoundException();
         }
 
+        /** @var DatabaseQueue $queue */
+        $queue = $this->queue;
+
         return new JsonResponse([
-            'queue' => $this->queue->getConnectionName(),
+            'queue' => $queue->getQueue(null),
             'status' => $this->isStarted() ? 'running' : 'inactive',
-            'pendingJobs' => $this->queue->size(),
+            'pendingJobs' => $queue->size(),
             'failedJobs' => count($this->failer->all()),
         ]);
     }
 
     protected function isStarted(): bool
     {
-        return false;
+        $dbValue = $this->settings->get('database_queue.working');
+
+        if (!$dbValue) {
+            return false;
+        }
+
+        return Carbon::parse($dbValue)->addMinutes(2)->isFuture();
     }
 }

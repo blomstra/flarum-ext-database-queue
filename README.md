@@ -18,20 +18,20 @@ To resolve this increasing burden, you can run a Queue. A queue runs on your ser
 composer require blomstra/database-queue:*
 ```
 
-Enable the extension inside the admin area and see below how to set up the queue worker.
+Enable the extension inside the admin area. If you already have the Flarum scheduler setup, there's nothing more to do. Otherwise, see below:
 
 ### Set up
 
 Go into your hosting control panel and set up the following task to run every minute:
 
 ```bash
-php flarum queue:work --stop-when-empty
+php flarum schedule:run
 ```
 
 Or in cron language:
 
 ```bash
-* * * * * cd /path/to/flarum && php flarum queue:work --stop-when-empty
+* * * * * cd /path/to/flarum && php flarum schedule:run
 ```
 
 ### FAQ

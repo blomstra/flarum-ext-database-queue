@@ -5,9 +5,9 @@ blomstra-database-queue:
       heading: Queue Overview
       refresh: Refresh
       data:
-        jobs-per-minute: Jobs Per Minute
-        jobs-past-hour: Jobs Past Hour
-        failed-last-seconds: Failed Jobs Past Few Seconds
+        queue-name: Queue
+        pending-jobs: Pending Jobs
+        failed-jobs: Failed Jobs
         status:
           label: Status
           running: Running

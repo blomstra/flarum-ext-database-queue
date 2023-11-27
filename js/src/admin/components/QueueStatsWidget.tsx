@@ -93,10 +93,10 @@ export default class QueueStatsWidget extends DashboardWidget {
 
     return (
       <>
-        {this.renderStat(app.translator.trans('blomstra-database-queue.admin.stats.data.jobs-per-minute'), queue)}
-        {this.renderStat(app.translator.trans('blomstra-database-queue.admin.stats.data.jobs-past-hour'), pendingJobs)}
-        {this.renderStat(app.translator.trans('blomstra-database-queue.admin.stats.data.failed-last-seconds'), failedJobs)}
         {this.renderStatusIndicator(status)}
+        {this.renderStat(app.translator.trans('blomstra-database-queue.admin.stats.data.queue-name'), queue)}
+        {this.renderStat(app.translator.trans('blomstra-database-queue.admin.stats.data.pending-jobs'), pendingJobs)}
+        {this.renderStat(app.translator.trans('blomstra-database-queue.admin.stats.data.failed-jobs'), failedJobs)}
       </>
     );
   }
