@@ -12,7 +12,3 @@ blomstra-database-queue:
           label: Status
           running: Running
           inactive: Inactive
-        total-processes: Total Processes
-        max-wait-time: Max Wait Time
-        max-runtime: Max Runtime
-        max-throughput: Max Throughput
