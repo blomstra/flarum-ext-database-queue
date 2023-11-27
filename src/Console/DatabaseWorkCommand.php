@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of blomstra/database-queue
+ *
+ * Copyright (c) 2023 Blomstra Ltd.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ *
+ */
+
 namespace Blomstra\DatabaseQueue\Console;
 
 use Carbon\Carbon;
@@ -10,7 +20,7 @@ use Illuminate\Queue\Worker;
 class DatabaseWorkCommand extends \Flarum\Queue\Console\WorkCommand
 {
     protected $settings;
-    
+
     protected $signature = 'queue:work:db
                             {connection? : The name of the queue connection to work}
                             {--name=default : The name of the worker}
@@ -39,11 +49,12 @@ class DatabaseWorkCommand extends \Flarum\Queue\Console\WorkCommand
     public function handle()
     {
         $this->settings->set('database_queue.working', Carbon::now()->toIso8601String());
-        
+
         try {
             parent::handle();
         } catch (\Exception $e) {
             $this->settings->delete('database_queue.working');
+
             throw $e;
         }
     }

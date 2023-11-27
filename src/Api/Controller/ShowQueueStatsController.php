@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of blomstra/database-queue
+ *
+ * Copyright (c) 2023 Blomstra Ltd.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ *
+ */
+
 namespace Blomstra\DatabaseQueue\Api\Controller;
 
 use Carbon\Carbon;
@@ -29,14 +39,14 @@ class ShowQueueStatsController implements RequestHandlerInterface
      * @var SettingsRepositoryInterface
      */
     protected $settings;
-    
+
     public function __construct(Queue $queue, SettingsRepositoryInterface $settings)
     {
         $this->queue = $queue;
         $this->failer = resolve('queue.failer');
         $this->settings = $settings;
     }
-    
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (!RequestUtil::getActor($request)->isAdmin()) {
@@ -47,10 +57,10 @@ class ShowQueueStatsController implements RequestHandlerInterface
         $queue = $this->queue;
 
         return new JsonResponse([
-            'queue' => $queue->getQueue(null),
-            'status' => $this->isStarted() ? 'running' : 'inactive',
+            'queue'       => $queue->getQueue(null),
+            'status'      => $this->isStarted() ? 'running' : 'inactive',
             'pendingJobs' => $queue->size(),
-            'failedJobs' => count($this->failer->all()),
+            'failedJobs'  => count($this->failer->all()),
         ]);
     }
 
