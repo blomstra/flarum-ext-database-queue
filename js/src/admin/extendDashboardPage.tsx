@@ -7,6 +7,6 @@ import QueueStatsWidget from './components/QueueStatsWidget';
 
 export default function extendDashboardPage() {
   extend(DashboardPage.prototype, 'availableWidgets', function (widgets: ItemList<Mithril.Children>) {
-    widgets.add('horizon-stats', <QueueStatsWidget />, 30);
+    widgets.add('dbqueue-stats', <QueueStatsWidget />, 30);
   });
 }
