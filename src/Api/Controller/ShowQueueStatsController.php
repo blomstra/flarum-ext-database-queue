@@ -18,6 +18,7 @@ use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Queue\DatabaseQueue;
+use Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -61,8 +62,21 @@ class ShowQueueStatsController implements RequestHandlerInterface
             'queue'       => $queue->getQueue(null),
             'status'      => $this->isStarted() ? 'running' : 'inactive',
             'pendingJobs' => $queue->size(),
-            'failedJobs'  => count($this->failer->all()),
+            'failedJobs'  => $this->getFailedJobCount(),
         ]);
+    }
+
+    protected function getFailedJobCount(): int
+    {
+        if ($this->failer instanceof DatabaseUuidFailedJobProvider) {
+            try {
+                return count($this->failer->all());
+            } catch (\Exception $e) {
+                return 0;
+            }
+        }
+        
+        return 0;
     }
 
     protected function isStarted(): bool
