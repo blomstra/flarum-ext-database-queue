@@ -13,7 +13,6 @@
 namespace Blomstra\DatabaseQueue\Tests\integration\api;
 
 use Flarum\Testing\integration\ConsoleTestCase;
-use Flarum\Testing\integration\TestCase;
 
 class StatsTest extends ConsoleTestCase
 {
