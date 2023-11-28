@@ -72,8 +72,6 @@ class ShowQueueStatsController implements RequestHandlerInterface
         } catch (\Exception $e) {
             return 0;
         }
-
-        return 0;
     }
 
     protected function isStarted(): bool
