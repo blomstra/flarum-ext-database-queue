@@ -18,7 +18,6 @@ use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Queue\DatabaseQueue;
-use Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
