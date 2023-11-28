@@ -23,17 +23,6 @@ class DatabaseQueueProvider extends AbstractServiceProvider
 {
     public function register()
     {
-        $this->container->extend('flarum.console.commands', function (array $commands) {
-            $key = array_search(WorkCommand::class, $commands);
-
-            // If found, remove the command from the array
-            if ($key !== false) {
-                unset($commands[$key]);
-            }
-
-            return $commands;
-        });
-
         $this->container->bind('flarum.queue.connection', function (Container $container) {
             $queue = new Queue(
                 $container->make('db.connection'),
@@ -55,6 +44,17 @@ class DatabaseQueueProvider extends AbstractServiceProvider
                 $config->offsetGet('database.database'),
                 'queue_failed_jobs'
             );
+        });
+
+        $this->container->extend('flarum.console.commands', function (array $commands) {
+            $key = array_search(WorkCommand::class, $commands);
+
+            // If found, remove the command from the array
+            if ($key !== false) {
+                unset($commands[$key]);
+            }
+
+            return $commands;
         });
     }
 }

@@ -27,7 +27,7 @@ return [
 
     (new Extend\Console())
         ->command(Console\DatabaseWorkCommand::class)
-        ->schedule('queue:work:db --stop-when-empty', function (Event $e) {
+        ->schedule('queue:work --stop-when-empty', function (Event $e) {
             $e->everyMinute();
         }),
 
