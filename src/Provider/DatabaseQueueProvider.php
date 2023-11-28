@@ -38,7 +38,7 @@ class DatabaseQueueProvider extends AbstractServiceProvider
         $this->container->singleton('queue.failer', function (Container $container) {
             /** @var Config $config */
             $config = $container->make(Config::class);
-            
+
             return new DatabaseUuidFailedJobProvider(
                 $container->make('db'),
                 $config->offsetGet('database.database'),
