@@ -15,9 +15,12 @@ namespace Blomstra\DatabaseQueue\Api\Controller;
 use Carbon\Carbon;
 use Flarum\Http\RequestUtil;
 use Flarum\Settings\SettingsRepositoryInterface;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Queue\DatabaseQueue;
+use Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider;
+use Illuminate\Queue\Failed\FailedJobProviderInterface;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,19 +34,17 @@ class ShowQueueStatsController implements RequestHandlerInterface
     protected $queue;
 
     /**
-     * @var \Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider
-     */
-    protected $failer;
-
-    /**
      * @var SettingsRepositoryInterface
      */
     protected $settings;
 
-    public function __construct(Queue $queue, SettingsRepositoryInterface $settings)
+    protected $failer;
+
+    public function __construct(Queue $queue, SettingsRepositoryInterface $settings, FailedJobProviderInterface $failer)
     {
         $this->queue = $queue;
         $this->settings = $settings;
+        $this->failer = $failer;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -52,8 +53,6 @@ class ShowQueueStatsController implements RequestHandlerInterface
             throw new ModelNotFoundException();
         }
 
-        $this->failer = resolve('queue.failer');
-
         /** @var DatabaseQueue $queue */
         $queue = $this->queue;
 
@@ -61,12 +60,16 @@ class ShowQueueStatsController implements RequestHandlerInterface
             'queue'       => $queue->getQueue(null),
             'status'      => $this->isStarted() ? 'running' : 'inactive',
             'pendingJobs' => $queue->size(),
-            'failedJobs'  => $this->getFailedJobCount(),
+            'failedJobs'  => count($this->failer->all()),
+            //'failedJobs'  => $this->getFailedJobCount(),
         ]);
     }
 
     protected function getFailedJobCount(): int
     {
+        /** @var \Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider $failer */
+        //$failer = resolve('queue.failer');
+
         return count($this->failer->all());
     }
 

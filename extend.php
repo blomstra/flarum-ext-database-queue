@@ -16,13 +16,14 @@ use Flarum\Extend;
 use Illuminate\Console\Scheduling\Event;
 
 return [
-    new DatabaseQueue(),
-
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less'),
 
     new Extend\Locales(__DIR__.'/resources/locale'),
+
+    (new Extend\ServiceProvider())
+        ->register(Provider\DatabaseQueueProvider::class),
 
     (new Extend\Routes('api'))
         ->get('/database-queue/stats', 'database.queue.stats', Api\Controller\ShowQueueStatsController::class),
@@ -33,6 +34,5 @@ return [
             $e->everyMinute();
         }),
 
-    (new Extend\ServiceProvider())
-        ->register(Provider\DatabaseQueueProvider::class),
+    
 ];

@@ -1,15 +1,5 @@
 <?php
 
-/*
- * This file is part of blomstra/database-queue
- *
- * Copyright (c) 2023 Blomstra Ltd.
- *
- * For the full copyright and license information, please view the LICENSE.md
- * file that was distributed with this source code.
- *
- */
-
 namespace Blomstra\DatabaseQueue\Tests\integration\api;
 
 use Flarum\Testing\integration\TestCase;
@@ -48,5 +38,12 @@ class StatsTest extends TestCase
         ));
 
         $this->assertEquals(200, $response->getStatusCode());
+
+        $body = json_decode($response->getBody(), true);
+
+        $this->assertEquals('default', $body['queue']);
+        $this->assertEquals('inactive', $body['status']);
+        $this->assertEquals(0, $body['pendingJobs']);
+        $this->assertEquals(0, $body['failedJobs']);
     }
 }
