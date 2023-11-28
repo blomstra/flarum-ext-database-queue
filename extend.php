@@ -17,7 +17,7 @@ use Illuminate\Console\Scheduling\Event;
 
 return [
     new DatabaseQueue(),
-    
+
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less'),

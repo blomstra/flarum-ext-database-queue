@@ -13,11 +13,7 @@
 namespace Blomstra\DatabaseQueue\Provider;
 
 use Flarum\Foundation\AbstractServiceProvider;
-use Flarum\Foundation\Config;
 use Flarum\Queue\Console\WorkCommand;
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Queue\DatabaseQueue as Queue;
-use Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider;
 
 class DatabaseQueueProvider extends AbstractServiceProvider
 {
