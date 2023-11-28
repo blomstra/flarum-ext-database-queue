@@ -43,7 +43,6 @@ class ShowQueueStatsController implements RequestHandlerInterface
     public function __construct(Queue $queue, SettingsRepositoryInterface $settings)
     {
         $this->queue = $queue;
-        $this->failer = resolve('queue.failer');
         $this->settings = $settings;
     }
 
@@ -52,6 +51,8 @@ class ShowQueueStatsController implements RequestHandlerInterface
         if (!RequestUtil::getActor($request)->isAdmin()) {
             throw new ModelNotFoundException();
         }
+
+        $this->failer = resolve('queue.failer');
 
         /** @var DatabaseQueue $queue */
         $queue = $this->queue;
