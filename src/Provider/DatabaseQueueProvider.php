@@ -29,6 +29,7 @@ class DatabaseQueueProvider extends AbstractServiceProvider
                 'queue_jobs'
             );
 
+            /** @phpstan-ignore-next-line */
             $queue->setContainer($this->container);
 
             return $queue;

@@ -59,16 +59,7 @@ class ShowQueueStatsController implements RequestHandlerInterface
             'status'      => $this->isStarted() ? 'running' : 'inactive',
             'pendingJobs' => $queue->size(),
             'failedJobs'  => count($this->failer->all()),
-            //'failedJobs'  => $this->getFailedJobCount(),
         ]);
-    }
-
-    protected function getFailedJobCount(): int
-    {
-        /** @var \Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider $failer */
-        //$failer = resolve('queue.failer');
-
-        return count($this->failer->all());
     }
 
     protected function isStarted(): bool
