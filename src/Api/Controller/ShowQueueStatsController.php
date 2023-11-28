@@ -67,11 +67,7 @@ class ShowQueueStatsController implements RequestHandlerInterface
 
     protected function getFailedJobCount(): int
     {
-        try {
-            return count($this->failer->all());
-        } catch (\Exception $e) {
-            return 0;
-        }
+        return count($this->failer->all());
     }
 
     protected function isStarted(): bool
