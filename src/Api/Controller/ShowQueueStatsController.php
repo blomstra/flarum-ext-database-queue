@@ -75,7 +75,7 @@ class ShowQueueStatsController implements RequestHandlerInterface
                 return 0;
             }
         }
-        
+
         return 0;
     }
 
