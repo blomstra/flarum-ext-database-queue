@@ -1,0 +1,81 @@
+.QueueStatsWidget {
+    padding: 10px 0px;
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 20px;
+    }
+
+    &-controls {
+        > .Button {
+            margin-left: 10px;
+        }
+    }
+
+    &-switch {
+        display: inline;
+        padding-left: 0;
+    }
+
+    &-title {
+        padding-top: 0;
+        color: @muted-color;
+    }
+
+    &-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 25px;
+        margin: 0 20px;
+
+        @media @phone {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &-stat {
+        background-color: @control-bg;
+        padding: 15px;
+        border-radius: @border-radius;
+        text-align: center;
+        box-shadow: 0 1px 2px @shadow-color;
+
+        small {
+            display: block;
+            color: @muted-color;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin: 0;
+            color: @heading-color;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                margin-right: 8px;
+            }
+
+            .LoadingIndicator {
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .text-success {
+        color: var(--enabled-color)
+    }
+
+    .text-danger {
+        color: var(--disabled-color)
+    }
+
+    &-footer {
+        padding: 20px;
+    }
+}
