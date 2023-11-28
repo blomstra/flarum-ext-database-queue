@@ -68,12 +68,10 @@ class ShowQueueStatsController implements RequestHandlerInterface
 
     protected function getFailedJobCount(): int
     {
-        if ($this->failer instanceof DatabaseUuidFailedJobProvider) {
-            try {
-                return count($this->failer->all());
-            } catch (\Exception $e) {
-                return 0;
-            }
+        try {
+            return count($this->failer->all());
+        } catch (\Exception $e) {
+            return 0;
         }
 
         return 0;
