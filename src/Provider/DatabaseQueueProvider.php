@@ -15,34 +15,34 @@ namespace Blomstra\DatabaseQueue\Provider;
 use Flarum\Foundation\AbstractServiceProvider;
 use Flarum\Foundation\Config;
 use Flarum\Queue\Console\WorkCommand;
-use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Queue\DatabaseQueue;
-use Illuminate\Queue\Failed\DatabaseUuidFailedJobProvider;
 use Illuminate\Queue\Failed\FailedJobProviderInterface;
 
 class DatabaseQueueProvider extends AbstractServiceProvider
 {
     public function register()
     {
-        $this->container->singleton('flarum.queue.connection', function (Container $container) {
+        $this->container->extend('flarum.queue.connection', function (Queue $queue) {
             $queue = new DatabaseQueue(
-                $container->make('db.connection'),
+                $this->container->make('db.connection'),
                 'queue_jobs'
             );
 
-            $queue->setContainer($container);
+            $queue->setContainer($this->container);
 
             return $queue;
         });
 
-        $this->container->singleton('queue.failer', function (Container $container) {
+        $this->container->extend('queue.failer', function (FailedJobProviderInterface $failer) {
             /** @var Config $config */
-            $config = $container->make(Config::class);
+            $config = $this->container->make(Config::class);
 
             return new DatabaseUuidFailedJobProvider(
-                $container->make('db'),
+                $this->container->make('db'),
                 $config->offsetGet('database.database'),
-                'queue_failed_jobs'
+                'queue_failed_jobs',
+                $this->container->make('flarum.db')
             );
         });
 
