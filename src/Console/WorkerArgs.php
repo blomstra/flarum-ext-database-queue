@@ -32,11 +32,25 @@ class WorkerArgs
             '--stop-when-empty',
         ];
 
-        $args['--tries'] = $this->settings->get('blomstra-database-queue.retries');
-        $args['--timeout'] = $this->settings->get('blomstra-database-queue.timeout');
-        $args['--rest'] = $this->settings->get('blomstra-database-queue.rest');
-        $args['--memory'] = $this->settings->get('blomstra-database-queue.memory');
-        $args['--backoff'] = $this->settings->get('blomstra-database-queue.backoff');
+        if ($retries = $this->settings->get('blomstra-database-queue.retries')) {
+            $args['--tries'] = $retries;
+        }
+
+        if ($memory = $this->settings->get('blomstra-database-queue.memory')) {
+            $args['--memory'] = $memory;
+        }
+
+        if ($timeout = $this->settings->get('blomstra-database-queue.timeout')) {
+            $args['--timeout'] = $timeout;
+        }
+
+        if ($rest = $this->settings->get('blomstra-database-queue.rest')) {
+            $args['--rest'] = $rest;
+        }
+
+        if ($backoff = $this->settings->get('blomstra-database-queue.backoff')) {
+            $args['--backoff'] = $backoff;
+        }
 
         return $args;
     }
