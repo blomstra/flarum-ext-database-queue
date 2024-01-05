@@ -12,6 +12,7 @@
 
 namespace Blomstra\DatabaseQueue;
 
+use Blomstra\DatabaseQueue\Console\WorkerArgs;
 use Flarum\Extend;
 use Illuminate\Console\Scheduling\Event;
 
@@ -30,8 +31,14 @@ return [
 
     (new Extend\Console())
         ->command(Console\DatabaseWorkCommand::class)
-        ->schedule('queue:work --stop-when-empty', function (Event $e) {
+        ->schedule('queue:work', function (Event $e) {
             $e->everyMinute();
-        }),
+        }, resolve(WorkerArgs::class)->args()),
 
+    (new Extend\Settings())
+        ->default('blomstra-database-queue.retries', 1)
+        ->default('blomstra-database-queue.timeout', 60)
+        ->default('blomstra-database-queue.rest', 0)
+        ->default('blomstra-database-queue.memory', 128)
+        ->default('blomstra-database-queue.backoff', 0),
 ];
