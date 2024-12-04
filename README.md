@@ -15,7 +15,7 @@ To resolve this increasing burden, you can run a Queue. A queue runs on your ser
 ## Install
 
 ```bash
-composer require blomstra/database-queue:*
+composer require blomstra/database-queue:"*"
 ```
 
 Enable the extension inside the admin area. If you already have the Flarum scheduler setup, there's nothing more to do. Otherwise, see below:
